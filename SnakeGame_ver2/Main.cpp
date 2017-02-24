@@ -25,6 +25,7 @@ struct Snake
 	int n;
 	//Điều hướng
 	eDirection dir;
+	
 
 };
 void Initialize(Snake &snake,Fruit &fr)
@@ -41,6 +42,7 @@ void Initialize(Snake &snake,Fruit &fr)
 }
 void Show(Snake snake,Fruit fr)
 {
+	
 	system("cls");
 	
 	//In màu mặc định tường
@@ -62,12 +64,17 @@ void Show(Snake snake,Fruit fr)
 	gotoXY(fr.fruit.x, fr.fruit.y);
 	putchar('@');
 
+	//In ra con rắn
 	TextColor(ColorCode_Green);
-	for (int i = 0; i < snake.n; i++)
+	gotoXY(snake.dot[0].x, snake.dot[0].y);
+	putchar(153);
+	for (int i = 1; i < snake.n; i++)
 	{
 		gotoXY(snake.dot[i].x, snake.dot[i].y);
 		putchar('*');
 	}
+	
+	
 }
 void Direction(Snake &snake)
 {
@@ -102,6 +109,7 @@ void Direction(Snake &snake)
 }
 int Logic(Snake &snake, Fruit &fr, int &sleeptime)
 {
+	int score = 0;
 	if (snake.dot[0].x == fr.fruit.x && snake.dot[0].y == fr.fruit.y)
 	{
 		for (int i=snake.n-1;i>0; i--)
@@ -121,7 +129,7 @@ int Logic(Snake &snake, Fruit &fr, int &sleeptime)
 
 		fr.fruit.x = rand() % width;
 		fr.fruit.y = rand() % height;
-
+		
 		//Thời gian ăn hoa quả.
 		sleeptime -= 20;
 	}
@@ -155,7 +163,7 @@ int main()
 		key = Logic(snake, fr,sleeptime);
 		if (key == -1)
 		{
-			gotoXY(width + 1, 10);
+			gotoXY(width + 10, 10);
 			cout << "Gameover";
 			while (_getch() != 13);
 			break;
